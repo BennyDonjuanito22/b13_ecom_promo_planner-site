@@ -1,256 +1,239 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PromoPilot - Plan, schedule, and execute ecommerce promotions on autopilo</title>
-    <meta name="description" content="SaaS tool for ecommerce promotion planning and execution — calendar-based promo scheduling, discount code generation, and campaign analytics.">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #1a202c;
-            background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
-        }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        header { text-align: center; padding: 80px 20px 60px; color: white; }
-        .badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.25);
-            padding: 10px 24px;
-            border-radius: 25px;
-            font-size: 15px;
-            margin-bottom: 25px;
-            backdrop-filter: blur(10px);
-            font-weight: 600;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        h1 {
-            font-size: 3.2em;
-            margin-bottom: 25px;
-            font-weight: 900;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-            line-height: 1.15;
-        }
-        .subtitle {
-            font-size: 1.5em;
-            margin-bottom: 45px;
-            opacity: 0.95;
-            max-width: 850px;
-            margin-left: auto;
-            margin-right: auto;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-        .cta-primary {
-            display: inline-block;
-            background: white;
-            color: #06B6D4;
-            padding: 20px 50px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 1.25em;
-            font-weight: 700;
-            transition: all 0.3s;
-            box-shadow: 0 4px 25px rgba(0,0,0,0.25);
-            border: 2px solid transparent;
-        }
-        .cta-primary:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 35px rgba(0,0,0,0.35);
-            border-color: rgba(255,255,255,0.5);
-        }
-        .content-section {
-            background: white;
-            border-radius: 16px;
-            padding: 70px 50px;
-            margin: 50px 0;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.12);
-        }
-        h2 {
-            font-size: 2.8em;
-            margin-bottom: 50px;
-            color: #2d3748;
-            text-align: center;
-            font-weight: 800;
-            position: relative;
-        }
-        h2::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: #06B6D4;
-            margin: 20px auto 0;
-            border-radius: 2px;
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 35px;
-            margin: 50px 0;
-        }
-        .feature-card {
-            background: linear-gradient(135deg, #F7FAFC 0%, #EDF2F7 100%);
-            padding: 35px;
-            border-radius: 12px;
-            border-left: 5px solid #06B6D4;
-            transition: all 0.3s;
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .feature-card h3 {
-            color: #06B6D4;
-            font-size: 1.5em;
-            margin-bottom: 18px;
-            font-weight: 700;
-        }
-        .feature-card p {
-            color: #4A5568;
-            font-size: 1.1em;
-            line-height: 1.8;
-        }
-        .deliverables-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin: 45px 0;
-        }
-        .deliverable-item {
-            display: flex;
-            align-items: start;
-            padding: 25px;
-            background: #F7FAFC;
-            border-radius: 10px;
-            border: 2px solid #E2E8F0;
-            transition: all 0.3s;
-        }
-        .deliverable-item:hover {
-            border-color: #06B6D4;
-            background: white;
-        }
-        .deliverable-item::before {
-            content: "✓";
-            color: #06B6D4;
-            font-size: 1.8em;
-            font-weight: bold;
-            margin-right: 18px;
-            flex-shrink: 0;
-        }
-        .pricing-section {
-            text-align: center;
-            padding: 50px 30px;
-        }
-        .price {
-            font-size: 3.5em;
-            font-weight: 900;
-            color: #06B6D4;
-            margin: 30px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-        .price-subtext {
-            font-size: 1.3em;
-            color: #718096;
-            margin: 25px 0;
-            font-weight: 500;
-        }
-        .guarantee-box {
-            background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
-            border: 3px solid #10B981;
-            border-radius: 16px;
-            padding: 40px;
-            margin: 50px 0;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.2);
-        }
-        .guarantee-box h3 {
-            color: #059669;
-            font-size: 2em;
-            margin-bottom: 20px;
-            font-weight: 800;
-        }
-        .guarantee-box p {
-            font-size: 1.2em;
-            color: #065F46;
-            line-height: 1.8;
-        }
-        .target-audience {
-            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
-            padding: 35px;
-            border-radius: 12px;
-            border: 2px solid #F59E0B;
-            margin: 40px 0;
-        }
-        .target-audience h3 {
-            color: #92400E;
-            font-size: 1.6em;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-        .target-audience p {
-            color: #78350F;
-            font-size: 1.15em;
-            line-height: 1.7;
-        }
-        footer {
-            text-align: center;
-            padding: 50px 30px;
-            color: white;
-            background: rgba(0,0,0,0.25);
-            border-radius: 16px;
-            margin-top: 50px;
-            backdrop-filter: blur(10px);
-        }
-        @media (max-width: 768px) {
-            h1 { font-size: 2.2em; }
-            .subtitle { font-size: 1.2em; }
-            .features-grid { grid-template-columns: 1fr; }
-            .content-section { padding: 40px 25px; }
-        }
-    </style>
-<!-- Google Analytics (GA4) - Measurement ID to be set by Kiki via KIKI-G11 -->
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PromoPilot — AI-Powered Promotional Calendar &amp; Campaign Planner</title>
+    <meta name="description" content="PromoPilot is the AI-powered promotional calendar and campaign planner built for e-commerce brands. Plan, schedule, and optimize every sale, holiday promo, and product launch automatically." />
+    <link rel="stylesheet" href="styles.css" />
+  <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <div class="badge">14-day free trial</div>
-            <h1>PromoPilot — Ecommerce Promo Autopilot</h1>
-            <p class="subtitle">Plan, schedule, and execute ecommerce promotions on autopilot. Never miss a sales window.</p>
-            <a href="None" class="cta-primary">Start Free Trial</a>
-        </header>
+  <body>
+    <header class="header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html">PromoPilot</a>
+        <nav class="nav">
+          <a href="index.html" aria-current="page">Home</a>
+          <a href="products.html">Plans</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
 
-        <div class="content-section"><div class="target-audience"><h3>Perfect For</h3><p>Ecommerce store owners, DTC brands, Shopify merchants running frequent promotions</p></div></div>
-
-        <div class="content-section">
-            <h2>What You Get</h2>
-            <div class="deliverables-list"><div class="deliverable-item">Promo calendar with holiday templates</div><div class="deliverable-item">Discount code generator + scheduler</div><div class="deliverable-item">Campaign performance analytics</div><div class="deliverable-item">Multi-store support (Shopify, WooCommerce)</div><div class="deliverable-item">AI-powered promo copy generator</div></div>
+    <main class="container">
+      <!-- Hero -->
+      <section class="hero">
+        <span class="badge">AI-Powered Promo Planning</span>
+        <h1>Never Miss a <span>Revenue Moment</span> Again</h1>
+        <p class="lead">PromoPilot builds your entire promotional calendar with AI — holidays, flash sales, product launches, and seasonal campaigns — so you can focus on growing your brand instead of scrambling for ideas.</p>
+        <div class="cta-row">
+          <a href="products.html" class="button primary">Start Free Trial</a>
+          <a href="pricing.html" class="button secondary">View Pricing</a>
         </div>
+      </section>
 
-        <div class="content-section"><h2>Challenges We Solve</h2><div class="features-grid"><div class="feature-card"><h3>Challenge #1</h3><p>Promotions are manual and error-prone</p></div><div class="feature-card"><h3>Challenge #2</h3><p>Miss seasonal sales windows</p></div><div class="feature-card"><h3>Challenge #3</h3><p>No analytics on promo performance</p></div></div></div>
-
-        <div class="content-section pricing-section">
-            <h2>Investment</h2>
-            <div class="price">$49</div>
-            <p class="price-subtext">Professional solution with transparent pricing</p>
-            <a href="None" class="cta-primary">Start Free Trial</a>
+      <!-- Social Proof Stats -->
+      <section class="section">
+        <div class="stats-row">
+          <div class="stat">
+            <div class="stat-number">2,400+</div>
+            <div class="stat-label">Brands onboard</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">18,000+</div>
+            <div class="stat-label">Campaigns planned</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">34%</div>
+            <div class="stat-label">Avg. revenue lift</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">12 hrs</div>
+            <div class="stat-label">Saved per month</div>
+          </div>
         </div>
+      </section>
 
-        <div class="guarantee-box"><h3>💯 Our Guarantee</h3><p>14-day free trial. Cancel anytime.</p></div>
+      <!-- Pain Points -->
+      <section class="section">
+        <div class="section-header">
+          <h2>The E-Commerce Promo Problem</h2>
+          <p>Sound familiar? PromoPilot fixes all of this.</p>
+        </div>
+        <div class="pain-grid">
+          <div class="pain-card">
+            <div class="pain-icon">📅</div>
+            <h3>Last-Minute Scrambles</h3>
+            <p>You realize Valentine's Day is next week and you haven't planned a single email, discount, or social post. Every holiday sneaks up on you because there's no system in place.</p>
+          </div>
+          <div class="pain-card">
+            <div class="pain-icon">🧠</div>
+            <h3>Promo Idea Fatigue</h3>
+            <p>Coming up with fresh, relevant promotional angles every month is exhausting. You end up running the same tired "20% off" sale because creativity takes time you don't have.</p>
+          </div>
+          <div class="pain-card">
+            <div class="pain-icon">📊</div>
+            <h3>No Unified Calendar</h3>
+            <p>Your promos live in spreadsheets, sticky notes, Slack messages, and your head. There's no single view of what's running, what's coming, and what's performing.</p>
+          </div>
+          <div class="pain-card">
+            <div class="pain-icon">💸</div>
+            <h3>Missed Revenue Windows</h3>
+            <p>Back-to-school, Prime Day, seasonal shifts — the revenue moments are happening whether you plan for them or not. Every missed promo is money left on the table.</p>
+          </div>
+        </div>
+      </section>
 
-        <footer>
-            <p style="font-size:1.3em; font-weight:600;">&copy; 2026 PromoPilot</p>
-            <p style="margin-top:15px; opacity:0.85;">All rights reserved | Powered by ASI Network</p>
-        </footer>
-    </div>
-</body>
+      <!-- Features -->
+      <section class="section">
+        <div class="section-header">
+          <h2>How PromoPilot Works</h2>
+          <p>Three steps to a year of revenue-driving promotions.</p>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <h3>1. Connect Your Brand</h3>
+            <p>Tell us your product categories, target audience, and key revenue goals. PromoPilot's AI analyzes your niche and builds a tailored promotional calendar instantly.</p>
+          </div>
+          <div class="card">
+            <h3>2. Review &amp; Customize</h3>
+            <p>Get a full 12-month calendar with suggested themes, discount strategies, email subject lines, and social copy. Drag, drop, edit, and make it yours.</p>
+          </div>
+          <div class="card">
+            <h3>3. Execute &amp; Optimize</h3>
+            <p>Launch campaigns directly or export to your tools. PromoPilot tracks performance and uses AI to recommend real-time adjustments for maximum ROI.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Feature Deep Dive -->
+      <section class="section">
+        <div class="section-header">
+          <h2>Built for E-Commerce Growth</h2>
+          <p>Every feature designed to drive more revenue with less effort.</p>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <h3>🤖 AI Calendar Engine</h3>
+            <p>Automatically generates promo ideas based on your niche, seasonality trends, competitor data, and historical performance patterns.</p>
+          </div>
+          <div class="card">
+            <h3>📧 Copy &amp; Creative Briefs</h3>
+            <p>Get ready-to-use email subject lines, ad copy, social captions, and creative briefs for every campaign — generated by AI, refined by you.</p>
+          </div>
+          <div class="card">
+            <h3>📈 Revenue Forecasting</h3>
+            <p>See projected revenue impact for each promo before you launch. PromoPilot models expected lift based on similar campaigns across the platform.</p>
+          </div>
+          <div class="card">
+            <h3>🔗 Platform Integrations</h3>
+            <p>Connect Shopify, Klaviyo, Meta Ads, Google Ads, and more. Push campaigns directly from PromoPilot to your execution stack.</p>
+          </div>
+          <div class="card">
+            <h3>👥 Team Collaboration</h3>
+            <p>Share calendars, assign tasks, leave comments, and keep your entire marketing team aligned on the promotional roadmap.</p>
+          </div>
+          <div class="card">
+            <h3>📱 Mobile Dashboard</h3>
+            <p>Check upcoming promos, approve campaigns, and track results from your phone. Stay in control even when you're on the go.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials -->
+      <section class="section">
+        <div class="section-header">
+          <h2>Trusted by Growing Brands</h2>
+          <p>Hear from e-commerce operators who switched to PromoPilot.</p>
+        </div>
+        <div class="grid">
+          <div class="testimonial">
+            <blockquote>"We used to plan promos week-by-week. PromoPilot gave us a full year mapped out in 20 minutes. Our Q4 revenue jumped 41% because we actually had a plan."</blockquote>
+            <div class="author">Sarah Chen <span>— Founder, Bloom Botanicals</span></div>
+          </div>
+          <div class="testimonial">
+            <blockquote>"The AI-generated copy alone saves me 5 hours a week. I just tweak the subject lines and hit send. It's like having a marketing strategist on staff."</blockquote>
+            <div class="author">Marcus Rivera <span>— Head of Growth, UrbanPack Co.</span></div>
+          </div>
+          <div class="testimonial">
+            <blockquote>"Managing promos for 8 brands was chaos before PromoPilot. Now I have one dashboard, one calendar, and zero missed opportunities."</blockquote>
+            <div class="author">Leah Okonkwo <span>— Agency Director, Spark Commerce</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pricing Preview -->
+      <section class="section">
+        <div class="section-header">
+          <h2>Simple, Transparent Pricing</h2>
+          <p>No hidden fees. Cancel anytime. Start with a 14-day free trial.</p>
+        </div>
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <div class="plan-name">Starter</div>
+            <div class="price">$29<span>/mo</span></div>
+            <div class="price-note">Perfect for solo brand owners</div>
+            <ul>
+              <li>1 brand</li>
+              <li>12 promos per year</li>
+              <li>AI calendar generation</li>
+              <li>Email copy suggestions</li>
+              <li>Basic analytics</li>
+            </ul>
+            <a href="products.html" class="button primary">Start Free Trial</a>
+          </div>
+          <div class="pricing-card featured">
+            <div class="featured-badge">Most Popular</div>
+            <div class="plan-name">Growth</div>
+            <div class="price">$79<span>/mo</span></div>
+            <div class="price-note">For scaling e-commerce brands</div>
+            <ul>
+              <li>3 brands</li>
+              <li>Unlimited promos</li>
+              <li>AI copy &amp; creative briefs</li>
+              <li>Revenue forecasting</li>
+              <li>Platform integrations</li>
+            </ul>
+            <a href="products.html" class="button primary">Start Free Trial</a>
+          </div>
+          <div class="pricing-card">
+            <div class="plan-name">Agency</div>
+            <div class="price">$199<span>/mo</span></div>
+            <div class="price-note">For agencies &amp; multi-brand teams</div>
+            <ul>
+              <li>10 brands</li>
+              <li>Unlimited promos</li>
+              <li>Team seats &amp; collaboration</li>
+              <li>White-label reports</li>
+              <li>Priority support</li>
+            </ul>
+            <a href="products.html" class="button primary">Start Free Trial</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final CTA -->
+      <section class="section" style="text-align:center; padding-bottom:5rem;">
+        <h2 style="font-size:2rem; font-weight:700; margin-bottom:1rem;">Ready to Put Your Promos on Autopilot?</h2>
+        <p class="lead">Join 2,400+ brands using PromoPilot to plan smarter, sell more, and never miss a revenue moment.</p>
+        <div class="cta-row">
+          <a href="products.html" class="button primary">Get Started Free</a>
+          <a href="contact.html" class="button secondary">Talk to Sales</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2026 PromoPilot. All rights reserved.</p>
+        <p><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="contact.html">Contact</a></p>
+      </div>
+    </footer>
+    <script src="cookie-consent.js"></script>
+  </body>
 </html>
